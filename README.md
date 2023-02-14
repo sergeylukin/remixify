@@ -8,6 +8,32 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 npx create-remix@latest --template remix-run/indie-stack
 ```
 
+## Netlify Setup
+
+1. Install the [Netlify CLI](https://www.netlify.com/products/dev/):
+
+```sh
+npm i -g netlify-cli
+```
+
+If you have previously installed the Netlify CLI, you should update it to the latest version:
+
+```sh
+npm i -g netlify-cli@latest
+```
+
+2. Sign up and log in to Netlify:
+
+```sh
+netlify login
+```
+
+3. Create a new site:
+
+```sh
+netlify init
+```
+
 ## What's in the stack
 
 - [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
@@ -34,25 +60,23 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
 ## Development
 
-- This step only applies if you've opted out of having the CLI install dependencies for you:
+The Remix dev server starts your app in development mode, rebuilding assets on file changes. To start the Remix dev server:
 
-  ```sh
-  npx remix init
-  ```
+```sh
+npm run dev
+```
 
-- Initial setup: _If you just generated this project, this step has been done for you._
+Open up [http://localhost:3000](http://localhost:3000), and you should be ready to go!
 
-  ```sh
-  npm run setup
-  ```
+The Netlify CLI builds a production version of your Remix App Server and splits it into Netlify Functions that run locally. This includes any custom Netlify functions you've developed. The Netlify CLI runs all of this in its development mode.
 
-- Start dev server:
+```sh
+netlify dev
+```
 
-  ```sh
-  npm run dev
-  ```
+Open up [http://localhost:3000](http://localhost:3000), and you should be ready to go!
 
-This starts your app in development mode, rebuilding assets on file changes.
+Note: When running the Netlify CLI, file changes will rebuild assets, but you will not see the changes to the page you are on unless you do a browser refresh of the page. Due to how the Netlify CLI builds the Remix App Server, it does not support hot module reloading.
 
 The database seed script creates a new user with some data you can use to get started:
 
@@ -68,6 +92,16 @@ This is a pretty simple note-taking app, but it's a good example of how you can 
 - creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
 
 ## Deployment
+
+There are two ways to deploy your app to Netlify, you can either link your app to your git repo and have it auto deploy changes to Netlify, or you can deploy your app manually. If you've followed the setup instructions already, all you need to do is run this:
+
+```sh
+# preview deployment
+netlify deploy --build
+
+# production deployment
+netlify deploy --build --prod
+```
 
 This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
 
